@@ -53,10 +53,13 @@ namespace Code.Combat
         // means they're preparing an action already
         if (_preparedCharacters.Contains(character)) return;
         var target = character.Behavior.ChooseTarget(friendlies, enemies);
-        PreparedActions.Add(new PreparedAction(
+        var action = character.Behavior.ChooseAction(character, target);
+        // means character is not ready to act
+        if (target == null || action == null) return;
+          PreparedActions.Add(new PreparedAction(
           character,
-          character.Behavior.ChooseTarget(friendlies, enemies),
-          character.Behavior.ChooseAction(character, target)
+          target,
+          action
         ));
         _preparedCharacters.Add(character);
       });

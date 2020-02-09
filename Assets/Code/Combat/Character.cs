@@ -1,4 +1,8 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Code.Combat.Action;
 using Code.Combat.Behavior;
 
 namespace Code.Combat
@@ -7,10 +11,11 @@ namespace Code.Combat
   {
     private const int TurnDuration = 100;
     public ICharacterBehavior Behavior;
-    public int Health { get; set; }
-    public int Damage { get; set; }
-    public int Speed { get; set; }
-    public string Name { get; set; }
+    public int Health;
+    public int Damage;
+    public int Speed;
+    public string Name;
+    public List<IAction> AvailableActions = new List<IAction>();
     private int _turnProgress;
 
     public bool Update()
@@ -34,5 +39,7 @@ namespace Code.Combat
       return "[" + Name + "] HP: " + Health + ", DMG: " + Damage + ", SPD: " + Speed + "(" + _turnProgress + "/" +
              TurnDuration + ")";
     }
+
+    public float TurnProgress => _turnProgress / (float) TurnDuration;
   }
 }

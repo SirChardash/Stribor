@@ -8,13 +8,13 @@ namespace Code.Handler
   {
     public GameObject parent;
     private Encounter _encounter;
-    private const int Speed = 1;
+    private const int Speed = 10;
     private int _step = 0;
 
-    void Start()
+    private void Start()
     {
       _encounter = EncounterHolder.CurrentEncounter;
-      Debug.Log("created encounter");
+      Debug.Log("created encounter " + (_encounter != null));
     }
 
     void Update()

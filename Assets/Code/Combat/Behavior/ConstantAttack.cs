@@ -9,8 +9,6 @@ namespace Code.Combat.Behavior
 {
   public class ConstantAttack : ICharacterBehavior
   {
-    private readonly AttackAction _attack = new AttackAction();
-
     public IAction ChooseAction(Character self, Character target)
     {
       return new AttackAction();
