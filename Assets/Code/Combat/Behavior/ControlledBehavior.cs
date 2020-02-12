@@ -5,16 +5,15 @@ namespace Code.Combat.Behavior
 {
   public class ControlledBehavior : ICharacterBehavior
   {
-    public readonly Order Order = new Order();
 
     public IAction ChooseAction(Character self, Character target)
     {
-      return Order.Action;
+      return self.Equals(InputState.Source) ? InputState.SelectedAction : null;
     }
 
     public Character ChooseTarget(List<Character> friendlies, List<Character> enemies)
     {
-      return Order.Target;
+      return InputState.Target;
     }
   }
 }

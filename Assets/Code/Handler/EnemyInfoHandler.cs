@@ -10,6 +10,7 @@ namespace Code.Handler
   {
     public Character character;
     public Text characterName;
+    public Selectable characterInfo;
 
     private void Start()
     {
@@ -19,12 +20,15 @@ namespace Code.Handler
 
     private void Update()
     {
+      characterInfo.interactable = InputState.Current == InputState.State.ChooseTarget;
+
       if (character.Health > 0) return;
       Destroy(gameObject);
     }
 
     public void OnSelect(BaseEventData eventData)
     {
+      InputState.Target = character;
     }
   }
 }

@@ -26,6 +26,10 @@ namespace Code.Handler
       _encounter.PreparedActions.ForEach(action =>
         output += action.Self.Name + "->" + action.Target.Name + " [" + action.GetElapsed() + "/" +
                   action.Action.Duration + "]\n");
+      output += "Current state: " + InputState.Current + "\n";
+      output += "Source: " + InputState.Source + "\n";
+      output += "Target: " + InputState.Target + "\n";
+      output += "Action: " + InputState.SelectedAction + "\n";
       text.text = output;
     }
   }

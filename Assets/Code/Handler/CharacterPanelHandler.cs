@@ -39,7 +39,12 @@ namespace Code.Handler
       {
         var button = Instantiate(buttonPrefab, frame.transform, false);
         button.transform.position = frame.transform.position + new Vector3(0, -25 * i);
-        button.GetComponent<Button>().onClick.AddListener(() => { Debug.Log("clicked"); });
+        var i1 = i;
+        button.GetComponent<Button>().onClick.AddListener(() =>
+        {
+          InputState.SelectedAction = character.AvailableActions[i1];
+          InputState.Current = InputState.State.ChooseTarget;
+        });
         button.GetComponentInChildren<Text>().text = character.AvailableActions[i].GetType().Name;
         _buttons.Add(button);
       }

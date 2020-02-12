@@ -132,3 +132,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: {fileID: 5563881048811827417}
+  characterInfo: {fileID: 942648460116725665}

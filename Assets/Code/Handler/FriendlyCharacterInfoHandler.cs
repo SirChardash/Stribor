@@ -14,12 +14,20 @@ namespace Code.Handler
     public Text health;
     public Character character;
     public Slider slider;
+    public Selectable characterBar;
 
     private void Update()
     {
       characterName.text = character.Name;
       health.text = character.Health.ToString();
       slider.value = character.TurnProgress;
+
+      var characterSelectable = (character.Health > 0
+                                 && character.IsReady()
+                                 && !character.Equals(ActiveCharacter.Character))
+                                || InputState.Current == InputState.State.ChooseTarget;
+
+      characterBar.interactable = characterSelectable;
 
       if (character.Health > 0) return;
       ActiveCharacter.Character = null;
@@ -28,10 +36,11 @@ namespace Code.Handler
 
     public void OnSelect(BaseEventData eventData)
     {
-      if (character.Health <= 0) return;
-      if (character.Equals(ActiveCharacter.Character)) return;
       ActiveCharacter.Changed = true;
       ActiveCharacter.Character = character;
+
+      if (InputState.Current == InputState.State.ChooseAction) InputState.Source = character;
+      if (InputState.Current == InputState.State.ChooseTarget) InputState.Target = character;
     }
   }
 }

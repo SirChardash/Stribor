@@ -56,11 +56,14 @@ namespace Code.Combat
         var action = character.Behavior.ChooseAction(character, target);
         // means character is not ready to act
         if (target == null || action == null) return;
-          PreparedActions.Add(new PreparedAction(
+        PreparedActions.Add(new PreparedAction(
           character,
           target,
           action
         ));
+
+        // clean input state if enlisted action was chosen by user
+        if (character.Behavior is ControlledBehavior) InputState.Clear();
         _preparedCharacters.Add(character);
       });
     }
