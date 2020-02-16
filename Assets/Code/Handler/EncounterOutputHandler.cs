@@ -1,5 +1,4 @@
-﻿using System;
-using Code.Combat;
+﻿using Code.Combat;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,8 +26,8 @@ namespace Code.Handler
         output += action.Self.Name + "->" + action.Target.Name + " [" + action.GetElapsed() + "/" +
                   action.Action.Duration + "]\n");
       output += "Current state: " + InputState.Current + "\n";
-      output += "Source: " + InputState.Source + "\n";
-      output += "Target: " + InputState.Target + "\n";
+      output += "Source: " + InputState.Source?.Name + "\n";
+      output += "Target: " + InputState.Target?.Name + "\n";
       output += "Action: " + InputState.SelectedAction + "\n";
       text.text = output;
     }

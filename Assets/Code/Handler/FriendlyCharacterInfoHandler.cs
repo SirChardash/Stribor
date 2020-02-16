@@ -16,20 +16,30 @@ namespace Code.Handler
     public Slider slider;
     public Selectable characterBar;
 
+    /// <summary>
+    /// This flag is used to update ActiveCharacter.Changed only first time unit is registered dead.
+    /// </summary>
+    private bool _confirmedDead;
+
     private void Update()
     {
+      if (_confirmedDead) return;
+
       characterName.text = character.Name;
       health.text = character.Health.ToString();
       slider.value = character.TurnProgress;
 
-      var characterSelectable = (character.Health > 0
-                                 && character.IsReady()
-                                 && !character.Equals(ActiveCharacter.Character))
+      var characterSelectable = character.Health > 0
+                                && character.IsReady()
+                                && !character.Equals(ActiveCharacter.Character)
                                 || InputState.Current == InputState.State.ChooseTarget;
 
       characterBar.interactable = characterSelectable;
 
       if (character.Health > 0) return;
+      _confirmedDead = true;
+
+      if (!character.Equals(ActiveCharacter.Character)) return;
       ActiveCharacter.Character = null;
       ActiveCharacter.Changed = true;
     }
