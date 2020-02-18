@@ -14,20 +14,21 @@ namespace Code.Combat
     private readonly List<Character> _preparedCharacters = new List<Character>(10);
     private int _actionCycle;
 
-    public EncounterResult Update()
+    public List<PreparedAction> Update()
     {
       // stop if someone won
       if (LeftTeam.Count == 0 || RightTeam.Count == 0)
       {
-        return new EncounterResult {LeftSideCount = LeftTeam.Count, RightSideCount = RightTeam.Count};
+        throw new EncounterEndException {LeftSideCount = LeftTeam.Count, RightSideCount = RightTeam.Count};
       }
 
       // progress prepared actions and execute them when ready
+      var readyActions = new List<PreparedAction>();
       PreparedActions.RemoveAll(preparedAction =>
       {
         var action = preparedAction.Update();
         if (action == null) return false;
-        action.Execute(preparedAction.Self, preparedAction.Target);
+        readyActions.Add(preparedAction);
         _preparedCharacters.Remove(preparedAction.Self);
         preparedAction.Self.ResetTurnProgress();
         return true;
@@ -41,7 +42,7 @@ namespace Code.Combat
       RemoveCorpses(LeftTeam);
       RemoveCorpses(RightTeam);
 
-      return null;
+      return readyActions;
     }
 
     private void UpdateCharacterSide(List<Character> friendlies, List<Character> enemies)

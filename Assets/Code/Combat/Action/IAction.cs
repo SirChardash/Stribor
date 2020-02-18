@@ -4,6 +4,7 @@ namespace Code.Combat.Action
   {
     void Execute(Character self, Character target);
 
+    string Name { get; }
     int Duration { get; }
   }
 }

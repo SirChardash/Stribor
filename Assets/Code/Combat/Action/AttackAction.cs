@@ -7,6 +7,7 @@ namespace Code.Combat.Action
     public AttackAction()
     {
       Duration = 10;
+      Name = "Attack";
     }
 
     public void Execute(Character self, Character target)
@@ -15,6 +16,7 @@ namespace Code.Combat.Action
       Debug.Log(self.Name + " attacks " + target.Name);
     }
 
+    public string Name { get; }
     public int Duration { get; }
   }
 }
