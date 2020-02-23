@@ -1,5 +1,6 @@
 using System;
 using Code.Combat;
+using Code.Combat.Behavior;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -32,9 +33,12 @@ namespace Code.Handler
       var characterSelectable = character.Health > 0
                                 && character.IsReady()
                                 && !character.Equals(ActiveCharacter.Character)
+                                && !((ControlledBehavior) character.Behavior).Order.IsReady()
                                 || InputState.Current == InputState.State.ChooseTarget;
 
       characterBar.interactable = characterSelectable;
+
+      if (!character.IsReady()) ((ControlledBehavior) character.Behavior).Order.Clear();
 
       if (character.Health > 0) return;
       _confirmedDead = true;
@@ -49,8 +53,7 @@ namespace Code.Handler
       ActiveCharacter.Changed = true;
       ActiveCharacter.Character = character;
 
-      if (InputState.Current == InputState.State.ChooseAction) InputState.Source = character;
-      if (InputState.Current == InputState.State.ChooseTarget) InputState.Target = character;
+      if (InputState.Current == InputState.State.ChooseTarget) ActiveCharacter.Order.Target = character;
     }
   }
 }

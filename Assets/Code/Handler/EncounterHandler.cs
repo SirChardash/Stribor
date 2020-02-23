@@ -11,10 +11,10 @@ namespace Code.Handler
     public GameObject parent;
     public Text currentActionText;
     private Encounter _encounter;
-    private const int Speed = 10;
+    private const int Speed = 40;
     private int _step = 0;
     private int _renderStep = 0;
-    private readonly int _renderLength = 100;
+    private const int RenderLength = 100;
     private List<PreparedAction> _readyActions = new List<PreparedAction>();
 
     private void Start()
@@ -42,9 +42,9 @@ namespace Code.Handler
       currentActionText.text = preparedAction.Self.Name
                                + " uses " + preparedAction.Action.Name
                                + " on " + preparedAction.Target.Name
-                               + " [" + _renderStep + "/" + _renderLength + "]";
+                               + " [" + _renderStep + "/" + RenderLength + "]";
 
-      if (++_renderStep % _renderLength != 0) return;
+      if (++_renderStep % RenderLength != 0) return;
       _renderStep = 0;
       currentActionText.text = "";
       preparedAction.Action.Execute(preparedAction.Self, preparedAction.Target);

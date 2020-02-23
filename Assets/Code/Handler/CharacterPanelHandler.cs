@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Code.Combat;
 using Code.Combat.Action;
+using Code.Combat.Behavior;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -42,7 +43,7 @@ namespace Code.Handler
         var i1 = i;
         button.GetComponent<Button>().onClick.AddListener(() =>
         {
-          InputState.SelectedAction = character.AvailableActions[i1];
+          ActiveCharacter.Order.Action = character.AvailableActions[i1];
           InputState.Current = InputState.State.ChooseTarget;
         });
         button.GetComponentInChildren<Text>().text = character.AvailableActions[i].GetType().Name;

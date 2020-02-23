@@ -1,5 +1,6 @@
 using System;
 using Code.Combat;
+using Code.Combat.Behavior;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -28,7 +29,7 @@ namespace Code.Handler
 
     public void OnSelect(BaseEventData eventData)
     {
-      InputState.Target = character;
+      ActiveCharacter.Order.Target = character;
     }
   }
 }

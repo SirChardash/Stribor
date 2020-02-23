@@ -1,4 +1,5 @@
 ﻿using Code.Combat;
+using Code.Combat.Behavior;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,9 +27,12 @@ namespace Code.Handler
         output += action.Self.Name + "->" + action.Target.Name + " [" + action.GetElapsed() + "/" +
                   action.Action.Duration + "]\n");
       output += "Current state: " + InputState.Current + "\n";
-      output += "Source: " + InputState.Source?.Name + "\n";
-      output += "Target: " + InputState.Target?.Name + "\n";
-      output += "Action: " + InputState.SelectedAction + "\n";
+      foreach (var character in _encounter.RightTeam)
+      {
+        output += "Order for " + character.Name +
+                  ": " + ((ControlledBehavior) character.Behavior).Order?.Action?.Name
+                  + " " + ((ControlledBehavior) character.Behavior).Order?.Target?.Name + "\n";
+      }
       text.text = output;
     }
   }
