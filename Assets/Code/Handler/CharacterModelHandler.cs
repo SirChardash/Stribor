@@ -8,17 +8,22 @@ namespace Code.Handler
   public class CharacterModelHandler : MonoBehaviour
   {
     public SpriteRenderer characterSprite;
+    public GameObject floatingNumberTextPrefab;
     public Character character;
+    public Vector3 textOffset;
     private List<Sprite> _sprites;
-    private const int SpriteDuration = 40;
+    private const int SpriteDuration = 25;
     private int _step;
     private int _currentSprite;
+    private int _previousHealth;
+    private Camera _camera;
 
     private void Start()
     {
-      characterSprite.flipX = true;
+      _camera = Camera.main;
       Debug.Log("instantiated character sprite");
       _sprites = SpriteRepo.GetSprite("eh");
+      _previousHealth = character.Health;
     }
 
     private void OnGUI()
@@ -28,6 +33,21 @@ namespace Code.Handler
       if (++_step != SpriteDuration) return;
       _step = 0;
       _currentSprite = (_currentSprite + 1) % _sprites.Count;
+    }
+
+    private void Update()
+    {
+      if (_previousHealth != character.Health)
+      {
+        var floatingNumberText = Instantiate(floatingNumberTextPrefab, transform, false);
+        floatingNumberText.transform.position = _camera.ScreenToWorldPoint(
+          _camera.WorldToScreenPoint(transform.position) + textOffset);
+        floatingNumberText.GetComponent<FloatingNumberHandler>().numberChange = character.Health - _previousHealth;
+
+        if (character.Health <= 0) Destroy(gameObject);
+      }
+
+      _previousHealth = character.Health;
     }
   }
 }

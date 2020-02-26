@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1875555456828472621}
   - component: {fileID: 1875555456828472620}
   m_Layer: 5
-  m_Name: FloatingText
+  m_Name: FloatingNumberText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,4 +91,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1875555456828472621}
-  numberChange: 20
+  numberChange: 0
+  camera: {fileID: 0}
