@@ -12,6 +12,8 @@ namespace Code.Combat
     public IAction Action;
     private int _elapsed;
 
+    public float Progress => (float) _elapsed / Action.Duration;
+
     public PreparedAction(Character self, Character target, IAction action)
     {
       Self = self;

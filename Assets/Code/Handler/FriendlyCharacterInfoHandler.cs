@@ -14,7 +14,8 @@ namespace Code.Handler
     public Text characterName;
     public Text health;
     public Character character;
-    public Slider slider;
+    public Slider actionFill;
+    public Slider castFill;
     public Selectable characterBar;
 
     /// <summary>
@@ -28,7 +29,9 @@ namespace Code.Handler
 
       characterName.text = character.Name;
       health.text = character.Health.ToString();
-      slider.value = character.TurnProgress;
+      actionFill.value = character.TurnProgress;
+      castFill.gameObject.SetActive(character.IsCasting());
+      if (character.IsCasting()) castFill.value = character.ActiveAction.Progress;
 
       var characterSelectable = character.Health > 0
                                 && character.IsReady()
@@ -42,7 +45,6 @@ namespace Code.Handler
 
       if (character.Health > 0) return;
       _confirmedDead = true;
-
       if (!character.Equals(ActiveCharacter.Character)) return;
       ActiveCharacter.Character = null;
       ActiveCharacter.Changed = true;
@@ -52,7 +54,6 @@ namespace Code.Handler
     {
       ActiveCharacter.Changed = true;
       ActiveCharacter.Character = character;
-
       if (InputState.Current == InputState.State.ChooseTarget) ActiveCharacter.Order.Target = character;
     }
   }

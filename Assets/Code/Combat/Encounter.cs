@@ -10,9 +10,12 @@ namespace Code.Combat
   {
     public List<Character> LeftTeam;
     public List<Character> RightTeam;
-    public readonly List<PreparedAction> PreparedActions = new List<PreparedAction>(10);
+    private readonly List<PreparedAction> _preparedActions = new List<PreparedAction>(10);
     private readonly List<Character> _preparedCharacters = new List<Character>(10);
     private int _actionCycle;
+
+    [Obsolete]
+    public List<PreparedAction> PreparedActions => _preparedActions;
 
     public List<PreparedAction> Update()
     {
@@ -24,13 +27,14 @@ namespace Code.Combat
 
       // progress prepared actions and execute them when ready
       var readyActions = new List<PreparedAction>();
-      PreparedActions.RemoveAll(preparedAction =>
+      _preparedActions.RemoveAll(preparedAction =>
       {
         var action = preparedAction.Update();
         if (action == null) return false;
         readyActions.Add(preparedAction);
         _preparedCharacters.Remove(preparedAction.Self);
         preparedAction.Self.ResetTurnProgress();
+        preparedAction.Self.ActiveAction = null;
         return true;
       });
 
@@ -57,12 +61,11 @@ namespace Code.Combat
         var action = character.Behavior.ChooseAction(character, target);
         // means character is not ready to act
         if (target == null || action == null) return;
-        PreparedActions.Add(new PreparedAction(
-          character,
-          target,
-          action
-        ));
+        var preparedAction = new PreparedAction(character, target, action);
 
+        _preparedActions.Add(preparedAction);
+        character.ActiveAction = preparedAction;
+        
         // clean input state if enlisted action was chosen by user
         if (character.Behavior is ControlledBehavior) InputState.Clear();
         _preparedCharacters.Add(character);
@@ -74,7 +77,7 @@ namespace Code.Combat
       characters.RemoveAll(character =>
       {
         if (character.Health > 0) return false;
-        PreparedActions.RemoveAll(action => action.Self.Equals(character));
+        _preparedActions.RemoveAll(action => action.Self.Equals(character));
         _preparedCharacters.Remove(character);
 
         Debug.Log(character.Name + " died");

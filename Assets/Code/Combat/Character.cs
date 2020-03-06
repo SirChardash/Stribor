@@ -17,6 +17,7 @@ namespace Code.Combat
     public string Name;
     public List<IAction> AvailableActions = new List<IAction>();
     private int _turnProgress;
+    public PreparedAction ActiveAction;
 
     public bool Update()
     {
@@ -27,6 +28,11 @@ namespace Code.Combat
     public bool IsReady()
     {
       return _turnProgress == TurnDuration;
+    }
+
+    public bool IsCasting()
+    {
+      return ActiveAction != null;
     }
 
     public void ResetTurnProgress()
