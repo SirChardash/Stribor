@@ -11,10 +11,9 @@ namespace Code.Handler
     public GameObject parent;
     public Text currentActionText;
     private Encounter _encounter;
-    private const int Speed = 40;
-    private int _step = 0;
-    private int _renderStep = 0;
-    private const int RenderLength = 100;
+    private double _renderProgress;
+    private const float RenderLength = 1f;
+    private const float TimeScale = 1f;
     private List<PreparedAction> _readyActions = new List<PreparedAction>();
 
     private void Start()
@@ -42,10 +41,11 @@ namespace Code.Handler
       currentActionText.text = preparedAction.Self.Name
                                + " uses " + preparedAction.Action.Name
                                + " on " + preparedAction.Target.Name
-                               + " [" + _renderStep + "/" + RenderLength + "]";
+                               + " [" + _renderProgress + "/" + RenderLength + "]";
 
-      if (++_renderStep % RenderLength != 0) return;
-      _renderStep = 0;
+      _renderProgress += Time.deltaTime * TimeScale;
+      if (_renderProgress < RenderLength) return;
+      _renderProgress = 0;
       currentActionText.text = "";
       preparedAction.Action.Execute(preparedAction.Self, preparedAction.Target);
       _readyActions.RemoveAt(0);
@@ -53,9 +53,7 @@ namespace Code.Handler
 
     private void HandleEncounterUpdate()
     {
-      if (++_step % Speed != 0) return;
-      _step = 0;
-      _readyActions = _encounter.Update();
+      _readyActions = _encounter.Update(Time.deltaTime * TimeScale);
     }
 
     private void HandleEncounterEnd(EncounterEndException e)

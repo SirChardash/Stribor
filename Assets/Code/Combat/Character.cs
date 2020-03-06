@@ -9,25 +9,26 @@ namespace Code.Combat
 {
   public class Character
   {
-    private const int TurnDuration = 100;
+    private const float TurnDuration = 100f;
     public ICharacterBehavior Behavior;
     public int Health;
     public int Damage;
     public int Speed;
     public string Name;
     public List<IAction> AvailableActions = new List<IAction>();
-    private int _turnProgress;
+    private float _turnProgress;
+    public float TurnProgress => _turnProgress / TurnDuration;
     public PreparedAction ActiveAction;
 
-    public bool Update()
+    public bool Update(float timeIncrement)
     {
-      _turnProgress = Math.Min(_turnProgress + Speed, TurnDuration);
+      _turnProgress = Math.Min(_turnProgress + timeIncrement * Speed, TurnDuration);
       return IsReady();
     }
 
     public bool IsReady()
     {
-      return _turnProgress == TurnDuration;
+      return _turnProgress >= TurnDuration;
     }
 
     public bool IsCasting()
@@ -45,7 +46,5 @@ namespace Code.Combat
       return "[" + Name + "] HP: " + Health + ", DMG: " + Damage + ", SPD: " + Speed + "(" + _turnProgress + "/" +
              TurnDuration + ")";
     }
-
-    public float TurnProgress => _turnProgress / (float) TurnDuration;
   }
 }

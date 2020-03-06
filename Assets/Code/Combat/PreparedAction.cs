@@ -10,9 +10,9 @@ namespace Code.Combat
     public Character Self;
     public Character Target;
     public IAction Action;
-    private int _elapsed;
-
-    public float Progress => (float) _elapsed / Action.Duration;
+    private float _elapsed;
+    [Obsolete] public float Elapsed => _elapsed;
+    public float Progress => _elapsed / Action.CastTime;
 
     public PreparedAction(Character self, Character target, IAction action)
     {
@@ -21,14 +21,10 @@ namespace Code.Combat
       Action = action;
     }
 
-    public IAction Update()
+    public IAction Update(float timeIncrement)
     {
-      return ++_elapsed == Action.Duration ? Action : null;
-    }
-
-    public int GetElapsed()
-    {
-      return _elapsed;
+      _elapsed += timeIncrement;
+      return _elapsed >= Action.CastTime ? Action : null;
     }
   }
 }

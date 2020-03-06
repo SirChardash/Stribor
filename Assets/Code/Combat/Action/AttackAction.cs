@@ -1,3 +1,4 @@
+using Code.Common;
 using UnityEngine;
 
 namespace Code.Combat.Action
@@ -6,7 +7,7 @@ namespace Code.Combat.Action
   {
     public AttackAction()
     {
-      Duration = 10;
+      CastTime = TimeConst.Seconds(3);
       Name = "Attack";
     }
 
@@ -17,6 +18,6 @@ namespace Code.Combat.Action
     }
 
     public string Name { get; }
-    public int Duration { get; }
+    public float CastTime { get; }
   }
 }

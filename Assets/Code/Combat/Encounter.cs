@@ -12,12 +12,11 @@ namespace Code.Combat
     public List<Character> RightTeam;
     private readonly List<PreparedAction> _preparedActions = new List<PreparedAction>(10);
     private readonly List<Character> _preparedCharacters = new List<Character>(10);
+    [Obsolete] public List<PreparedAction> PreparedActions => _preparedActions;
     private int _actionCycle;
 
-    [Obsolete]
-    public List<PreparedAction> PreparedActions => _preparedActions;
 
-    public List<PreparedAction> Update()
+    public List<PreparedAction> Update(float timeIncrement)
     {
       // stop if someone won
       if (LeftTeam.Count == 0 || RightTeam.Count == 0)
@@ -29,7 +28,7 @@ namespace Code.Combat
       var readyActions = new List<PreparedAction>();
       _preparedActions.RemoveAll(preparedAction =>
       {
-        var action = preparedAction.Update();
+        var action = preparedAction.Update(timeIncrement);
         if (action == null) return false;
         readyActions.Add(preparedAction);
         _preparedCharacters.Remove(preparedAction.Self);
@@ -39,8 +38,8 @@ namespace Code.Combat
       });
 
       // progress all characters and queue their actions when they're ready
-      UpdateCharacterSide(LeftTeam, RightTeam);
-      UpdateCharacterSide(RightTeam, LeftTeam);
+      UpdateCharacterSide(LeftTeam, RightTeam, timeIncrement);
+      UpdateCharacterSide(RightTeam, LeftTeam, timeIncrement);
 
       // remove corpses
       RemoveCorpses(LeftTeam);
@@ -49,11 +48,11 @@ namespace Code.Combat
       return readyActions;
     }
 
-    private void UpdateCharacterSide(List<Character> friendlies, List<Character> enemies)
+    private void UpdateCharacterSide(List<Character> friendlies, List<Character> enemies, float timeIncrement)
     {
       friendlies.ForEach(character =>
       {
-        var ready = character.Update();
+        var ready = character.Update(timeIncrement);
         if (!ready) return;
         // means they're preparing an action already
         if (_preparedCharacters.Contains(character)) return;
@@ -65,7 +64,7 @@ namespace Code.Combat
 
         _preparedActions.Add(preparedAction);
         character.ActiveAction = preparedAction;
-        
+
         // clean input state if enlisted action was chosen by user
         if (character.Behavior is ControlledBehavior) InputState.Clear();
         _preparedCharacters.Add(character);
