@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Code.Combat.Action;
 using Code.Combat.Behavior;
+using Code.Combat.Buff;
 
 namespace Code.Combat
 {
@@ -15,14 +16,16 @@ namespace Code.Combat
     public int Damage;
     public int Speed;
     public string Name;
-    public List<IAction> AvailableActions = new List<IAction>();
+    public IList<IAction> AvailableActions = new List<IAction>();
     private float _turnProgress;
     public float TurnProgress => _turnProgress / TurnDuration;
     public PreparedAction ActiveAction;
+    public List<IBuff> Buffs = new List<IBuff>();
 
     public bool Update(float timeIncrement)
     {
       _turnProgress = Math.Min(_turnProgress + timeIncrement * Speed, TurnDuration);
+      Buffs.ForEach(buff => buff.Update(timeIncrement, this));
       return IsReady();
     }
 
