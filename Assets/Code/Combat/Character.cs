@@ -46,8 +46,7 @@ namespace Code.Combat
 
     public string DebugString()
     {
-      return "[" + Name + "] HP: " + Health + ", DMG: " + Damage + ", SPD: " + Speed + "(" + _turnProgress + "/" +
-             TurnDuration + ")";
+      return $"[{Name}] HP: {Health}, DMG: {Damage}, SPD: {Speed}({_turnProgress}/{TurnDuration})";
     }
   }
 }

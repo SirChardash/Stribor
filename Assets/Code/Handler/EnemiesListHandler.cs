@@ -14,7 +14,7 @@ namespace Code.Handler
       var encounter = EncounterHolder.CurrentEncounter;
       for (var i = 0; i < encounter.LeftTeam.Count; i++)
       {
-        Debug.Log("creating enemy info " + i);
+        Debug.Log($"creating enemy info {i}");
         var characterBar = Instantiate(characterNamePrefab, frame.transform, false);
         characterBar.transform.position = camera.ScreenToWorldPoint(camera.WorldToScreenPoint(frame.transform.position) + new Vector3(0, -20 * i));
         characterBar.GetComponent<EnemyInfoHandler>().character = encounter.LeftTeam[i];

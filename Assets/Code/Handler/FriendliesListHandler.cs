@@ -27,7 +27,7 @@ namespace Code.Handler
         characterBar.transform.position = camera.ScreenToWorldPoint(camera.WorldToScreenPoint(frame.transform.position) + new Vector3(0, -20 * i));
         characterBar.GetComponent<FriendlyCharacterInfoHandler>().character = encounter.RightTeam[i];
         characterInfo.Add(characterBar);
-        Debug.Log("creating friendlies character info " + i);
+        Debug.Log($"creating friendlies character info {i}");
       }
     }
   }

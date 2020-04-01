@@ -14,7 +14,7 @@ namespace Code.Combat.Action
     public void Execute(Character self, Character target)
     {
       target.Health -= self.Damage;
-      Debug.Log(self.Name + " attacks " + target.Name);
+      Debug.Log($"{self.Name} attacks {target.Name}");
     }
 
     public string Name { get; }

@@ -22,7 +22,7 @@ namespace Code.Combat.Behavior
       }
 
       var target = enemies[RandomGenerator.RandomInt(enemies.Count)];
-      Debug.Log(target.Name + " is targeted");
+      Debug.Log($"{target.Name} is targeted");
       return target;
     }
   }

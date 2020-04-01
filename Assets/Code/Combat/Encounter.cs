@@ -79,7 +79,7 @@ namespace Code.Combat
         _preparedActions.RemoveAll(action => action.Self.Equals(character));
         _preparedCharacters.Remove(character);
 
-        Debug.Log(character.Name + " died");
+        Debug.Log($"{character.Name} died");
 
         return true;
       });

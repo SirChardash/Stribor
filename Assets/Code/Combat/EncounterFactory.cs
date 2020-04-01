@@ -22,7 +22,7 @@ namespace Code.Combat
         new Character {Damage = 4, Health = 25, Speed = 21, Name = "mob23", Behavior = new ConstantAttack()}
       };
 
-      Debug.Log("creating encounter with friendlies " + side1.Count + " enemies " + side2.Count);
+      Debug.Log($"creating encounter with friendlies {side1.Count} enemies {side2.Count}");
       return new Encounter() {RightTeam = side1, LeftTeam = side2};
     }
   }

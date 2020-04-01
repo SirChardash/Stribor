@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Code.Combat;
 using UnityEditor;
 using UnityEngine;
@@ -19,7 +20,7 @@ namespace Code.Handler
     private void Start()
     {
       _encounter = EncounterHolder.CurrentEncounter;
-      Debug.Log("created encounter " + (_encounter != null));
+      Debug.Log($"created encounter {_encounter != null}");
     }
 
     private void Update()
@@ -38,10 +39,8 @@ namespace Code.Handler
     private void HandleRendering()
     {
       var preparedAction = _readyActions[0];
-      currentActionText.text = preparedAction.Self.Name
-                               + " uses " + preparedAction.Action.Name
-                               + " on " + preparedAction.Target.Name
-                               + " [" + _renderProgress + "/" + RenderLength + "]";
+      currentActionText.text = $"{preparedAction.Self.Name} uses {preparedAction.Action.Name} " +
+                               $"on {preparedAction.Target.Name} [{_renderProgress:0.00}/{RenderLength}]";
 
       _renderProgress += Time.deltaTime * TimeScale;
       if (_renderProgress < RenderLength) return;
@@ -58,9 +57,7 @@ namespace Code.Handler
 
     private void HandleEncounterEnd(EncounterEndException e)
     {
-      Debug.Log("encounter finished: " +
-                "friendlies [" + e.RightSideCount + "], " +
-                "enemies [" + e.LeftSideCount + "]");
+      Debug.Log($"encounter finished: friendlies [{e.RightSideCount}], enemies [{e.LeftSideCount}]");
       parent.SetActive(false);
     }
   }
