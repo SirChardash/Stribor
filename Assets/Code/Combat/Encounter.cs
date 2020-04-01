@@ -13,8 +13,6 @@ namespace Code.Combat
     private readonly List<PreparedAction> _preparedActions = new List<PreparedAction>(10);
     private readonly List<Character> _preparedCharacters = new List<Character>(10);
     [Obsolete] public List<PreparedAction> PreparedActions => _preparedActions;
-    private int _actionCycle;
-
 
     public List<PreparedAction> Update(float timeIncrement)
     {
