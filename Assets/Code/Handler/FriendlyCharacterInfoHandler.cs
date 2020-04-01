@@ -1,7 +1,6 @@
 using System;
 using Code.Combat;
 using Code.Combat.Behavior;
-using Code.Tags;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
