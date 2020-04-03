@@ -27,7 +27,7 @@ namespace Code.Combat
     public bool Update(float timeIncrement)
     {
       _turnProgress = Math.Min(_turnProgress + timeIncrement * Speed, TurnDuration);
-      Buffs.ForEach(buff => buff.Update(timeIncrement, this));
+      Buffs.RemoveAll(buff => buff.Update(timeIncrement, this));
       return IsReady();
     }
 

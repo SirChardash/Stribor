@@ -25,7 +25,7 @@ namespace Code.Combat.Buff
             _damageType = damageType;
         }
 
-        public void Update(float timeIncrement, Character target)
+        public bool Update(float timeIncrement, Character target)
         {
             _elapsed += timeIncrement;
 
@@ -35,7 +35,7 @@ namespace Code.Combat.Buff
                 _timesHappened++;
             }
 
-            if (_elapsed > _duration) target.Buffs.Remove(this);
+            return _elapsed > _duration;
         }
     }
 }
