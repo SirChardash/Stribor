@@ -1,24 +1,29 @@
-﻿using Code.Common;
+﻿using Code.Combat.Calculations;
+using Code.Common;
 
 namespace Code.Combat.Buff
 {
     public class DamageOverTime : IBuff
     {
         public string Name { get; }
+        private readonly ICharacter _source;
         private readonly float _period;
         private readonly float _duration;
         private readonly int _damagePerTick;
-
-        public DamageOverTime(string name, float period, float duration, int damagePerTick)
-        {
-            Name = name;
-            _period = period;
-            _duration = duration;
-            _damagePerTick = damagePerTick;
-        }
+        private readonly DamageType _damageType;
 
         private float _elapsed;
         private int _timesHappened;
+        
+        public DamageOverTime(string name, ICharacter source, float period, float duration, int damagePerTick, DamageType damageType)
+        {
+            Name = name;
+            _source = source;
+            _period = period;
+            _duration = duration;
+            _damagePerTick = damagePerTick;
+            _damageType = damageType;
+        }
 
         public void Update(float timeIncrement, Character target)
         {
@@ -26,7 +31,7 @@ namespace Code.Combat.Buff
 
             if (_elapsed >= (_timesHappened + 1) * _period)
             {
-                target.Health -= _damagePerTick;
+                target.Health -= DamageCalculator.Damage(_source, target, _damagePerTick, _damageType);
                 _timesHappened++;
             }
 

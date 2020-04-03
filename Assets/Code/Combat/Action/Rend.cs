@@ -13,7 +13,7 @@ namespace Code.Combat.Action
 
         public void Execute(Character self, Character target)
         {
-            target.Buffs.Add(Buffs.Bleeding(TimeConst.Seconds(1), TimeConst.Seconds(5), 1));
+            target.Buffs.Add(Buffs.Bleeding(self.Snapshot(), TimeConst.Seconds(1), TimeConst.Seconds(5), 1));
         }
 
         public string Name { get; }

@@ -1,11 +1,12 @@
+using Code.Combat.Calculations;
 using Code.Common;
 using UnityEngine;
 
 namespace Code.Combat.Action
 {
-  public class AttackAction : IAction
+  public class Attack : IAction
   {
-    public AttackAction()
+    public Attack()
     {
       CastTime = TimeConst.Seconds(3);
       Name = "Attack";
@@ -13,7 +14,7 @@ namespace Code.Combat.Action
 
     public void Execute(Character self, Character target)
     {
-      target.Health -= self.Damage;
+      target.Health -= DamageCalculator.Damage(self, target, self.Damage, DamageType.Physical);
       Debug.Log($"{self.Name} attacks {target.Name}");
     }
 

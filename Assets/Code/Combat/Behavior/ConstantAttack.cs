@@ -11,7 +11,7 @@ namespace Code.Combat.Behavior
   {
     public IAction ChooseAction(Character self, Character target)
     {
-      return new AttackAction();
+      return new Attack();
     }
 
     public Character ChooseTarget(List<Character> friendlies, List<Character> enemies)
