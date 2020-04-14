@@ -18,7 +18,6 @@ namespace Code.Combat
     public int Speed { get; set; }
     public string Name { get; set; }
     
-    public IList<IAction> AvailableActions = new List<IAction>();
     private float _turnProgress;
     public float TurnProgress => _turnProgress / TurnDuration;
     public PreparedAction ActiveAction;

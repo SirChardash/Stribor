@@ -5,6 +5,10 @@ namespace Code.Combat.Behavior
 {
   public class ControlledBehavior : ICharacterBehavior
   {
+    public ControlledBehavior(IList<IAction> availableActions)
+    {
+      AvailableActions = availableActions;
+    }
 
     public readonly Order Order = new Order();
     
@@ -17,5 +21,7 @@ namespace Code.Combat.Behavior
     {
       return Order.Target;
     }
+
+    public IList<IAction> AvailableActions { get; }
   }
 }

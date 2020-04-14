@@ -9,6 +9,11 @@ namespace Code.Combat.Behavior
 {
   public class ConstantAttack : ICharacterBehavior
   {
+    public ConstantAttack()
+    {
+      AvailableActions = new List<IAction> {new Attack()};
+    }
+
     public IAction ChooseAction(Character self, Character target)
     {
       return new Attack();
@@ -25,5 +30,7 @@ namespace Code.Combat.Behavior
       Debug.Log($"{target.Name} is targeted");
       return target;
     }
+
+    public IList<IAction> AvailableActions { get; }
   }
 }

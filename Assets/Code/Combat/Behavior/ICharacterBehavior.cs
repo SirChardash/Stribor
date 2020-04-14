@@ -8,6 +8,7 @@ namespace Code.Combat.Behavior
     IAction ChooseAction(Character self, Character target);
 
     Character ChooseTarget(List<Character> friendlies, List<Character> enemies);
-    
+
+    IList<IAction> AvailableActions { get; }
   }
 }

@@ -11,9 +11,9 @@ namespace Code.Combat
     {
       var side1 = new List<Character>
       {
-        new Character {Damage = 4, Health = 30, Speed = 15, Name = "mob11", Behavior = new ControlledBehavior(), AvailableActions = {new Rend()}},
-        new Character {Damage = 6, Health = 15, Speed = 15, Name = "mob12", Behavior = new ControlledBehavior(), AvailableActions = {new Attack(), new Attack()}},
-        new Character {Damage = 4, Health = 25, Speed = 21, Name = "mob13", Behavior = new ControlledBehavior(), AvailableActions = {new Attack(), new Attack(), new Attack()}}
+        new Character {Damage = 4, Health = 30, Speed = 15, Name = "mob11", Behavior = new ControlledBehavior(new List<IAction> {new Rend()})},
+        new Character {Damage = 6, Health = 15, Speed = 15, Name = "mob12", Behavior = new ControlledBehavior(new List<IAction> {new Attack(), new Attack()})},
+        new Character {Damage = 4, Health = 25, Speed = 21, Name = "mob13", Behavior = new ControlledBehavior(new List<IAction> {new Attack(), new Attack(), new Attack()})}
       };
       var side2 = new List<Character>
       {
@@ -23,7 +23,7 @@ namespace Code.Combat
       };
 
       Debug.Log($"creating encounter with friendlies {side1.Count} enemies {side2.Count}");
-      return new Encounter() {RightTeam = side1, LeftTeam = side2};
+      return new Encounter {RightTeam = side1, LeftTeam = side2};
     }
   }
 }
