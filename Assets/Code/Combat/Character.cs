@@ -11,13 +11,17 @@ namespace Code.Combat
   public class Character : ICharacter
   {
     private const float TurnDuration = 100f;
-    
+
     public ICharacterBehavior Behavior;
-    public int Health { get; set; }
-    public int Damage { get; set; }
-    public int Speed { get; set; }
     public string Name { get; set; }
-    
+    public float MaxHealth { get; set; }
+    public float Health { get; set; }
+    public float Speed { get; set; }
+    public float PhysicalDamage { get; set; }
+    public float MagicalDamage { get; set; }
+    public float PhysicalArmor { get; set; }
+    public float MagicalArmor { get; set; }
+
     private float _turnProgress;
     public float TurnProgress => _turnProgress / TurnDuration;
     public PreparedAction ActiveAction;
@@ -47,7 +51,8 @@ namespace Code.Combat
 
     public string DebugString()
     {
-      return $"[{Name}] HP: {Health}, DMG: {Damage}, SPD: {Speed}({_turnProgress}/{TurnDuration})";
+      return $"[{Name}] HP: {Health}/{MaxHealth}, SPD: {Speed}, DMG: P{PhysicalDamage}/M{MagicalDamage}, " +
+             $"DEF: P{PhysicalArmor}/M{MagicalArmor} ({(int) _turnProgress}/{TurnDuration})";
     }
 
     /// <summary>
@@ -57,7 +62,8 @@ namespace Code.Combat
     /// <returns>partial snapshot of character</returns>
     public CharacterSnapshot Snapshot()
     {
-      return new CharacterSnapshot(Name, Health, Damage, Speed);
+      return new CharacterSnapshot(Name, MaxHealth, Health, Speed, PhysicalDamage, MagicalDamage, PhysicalArmor,
+        MagicalArmor);
     }
   }
 }

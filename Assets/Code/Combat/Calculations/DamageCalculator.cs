@@ -2,7 +2,7 @@
 {
     public static class DamageCalculator
     {
-        public static int Damage(ICharacter source, Character target, int damage, DamageType damageType)
+        public static float Damage(ICharacter source, Character target, float damage, DamageType damageType)
         {
             return damage;
         }

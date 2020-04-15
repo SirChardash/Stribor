@@ -14,7 +14,7 @@ namespace Code.Combat.Action
 
     public void Execute(Character self, Character target)
     {
-      target.Health -= DamageCalculator.Damage(self, target, self.Damage, DamageType.Physical);
+      target.Health -= DamageCalculator.Damage(self, target, self.PhysicalDamage, DamageType.Physical);
       Debug.Log($"{self.Name} attacks {target.Name}");
     }
 

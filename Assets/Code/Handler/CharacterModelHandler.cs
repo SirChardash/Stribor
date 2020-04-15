@@ -15,7 +15,7 @@ namespace Code.Handler
     private const int SpriteDuration = 25;
     private int _step;
     private int _currentSprite;
-    private int _previousHealth;
+    private float _previousHealth;
     private Camera _camera;
 
     private void Start()
@@ -37,12 +37,12 @@ namespace Code.Handler
 
     private void Update()
     {
-      if (_previousHealth != character.Health)
+      if (Math.Abs(_previousHealth - character.Health) > 1)
       {
         var floatingNumberText = Instantiate(floatingNumberTextPrefab, transform, false);
         floatingNumberText.transform.position = _camera.ScreenToWorldPoint(
           _camera.WorldToScreenPoint(transform.position) + textOffset);
-        floatingNumberText.GetComponent<FloatingNumberHandler>().numberChange = character.Health - _previousHealth;
+        floatingNumberText.GetComponent<FloatingNumberHandler>().numberChange = (int) (character.Health - _previousHealth);
 
         if (character.Health <= 0) Destroy(gameObject);
       }
