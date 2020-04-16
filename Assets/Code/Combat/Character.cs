@@ -25,7 +25,21 @@ namespace Code.Combat
     private float _turnProgress;
     public float TurnProgress => _turnProgress / TurnDuration;
     public PreparedAction ActiveAction;
-    public List<IBuff> Buffs = new List<IBuff>();
+    public readonly List<IBuff> Buffs = new List<IBuff>();
+
+    public Character(ICharacterBehavior behavior, string name, float maxHealth, float health, float speed,
+      float physicalDamage, float magicalDamage, float physicalArmor, float magicalArmor)
+    {
+      Behavior = behavior;
+      Name = name;
+      MaxHealth = maxHealth;
+      Health = health;
+      Speed = speed;
+      PhysicalDamage = physicalDamage;
+      MagicalDamage = magicalDamage;
+      PhysicalArmor = physicalArmor;
+      MagicalArmor = magicalArmor;
+    }
 
     public bool Update(float timeIncrement)
     {
