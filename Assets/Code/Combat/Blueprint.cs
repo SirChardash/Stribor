@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Code.Combat.Action;
 using Code.Combat.Behavior;
 
@@ -42,11 +43,11 @@ namespace Code.Combat
       _magicalArmorGrowth = magicalArmorGrowth;
     }
 
-    public Character ToCharacter(int level = 1, List<Modifier> modifiers = null)
+    public Character ToCharacter(int level = 1, List<Modifier> modifiers = null, List<IAction> playerActions = null)
     {
       level--;
       var character = new Character(
-        _behavior,
+        playerActions != null ? new ControlledBehavior(playerActions) : _behavior,
         _name,
         _maxHealth + level * _maxHealthGrowth,
         _maxHealth + level * _maxHealthGrowth,
@@ -62,15 +63,15 @@ namespace Code.Combat
 
     // blueprint list
     
-    public static readonly Blueprint ControlledSample1 = new Blueprint(
-      "Controlled lab sample #1",
+    public static readonly Blueprint LabSample1 = new Blueprint(
+      "Lab sample #1",
       30,
       15,
       4,
       5,
       2,
       1,
-      new ControlledBehavior(new List<IAction> {new Rend()}),
+      new ConstantAttack(), 
       0,
       0,
       0,
@@ -78,60 +79,9 @@ namespace Code.Combat
       0,
       0
     );
-    
-    public static readonly Blueprint ControlledSample2 = new Blueprint(
-      "Controlled lab sample #2",
-      15,
-      15,
-      6,
-      2,
-      2,
-      5,
-      new ControlledBehavior(new List<IAction> {new Attack(), new Attack()}),
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    );
-    
-    public static readonly Blueprint ControlledSample3 = new Blueprint(
-      "Controlled lab sample #3",
-      25,
-      21,
-      4,
-      5,
-      5,
-      6,
-      new ControlledBehavior(new List<IAction> {new Attack(), new Attack(), new Attack()}),
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    );
-    
-    public static readonly Blueprint AutonomousSample1 = new Blueprint(
-      "Autonomous lab sample #1",
-      30,
-      15,
-      4,
-      5,
-      2,
-      1,
-      new ControlledBehavior(new List<IAction> {new Rend()}),
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
-    );
-    
-    public static readonly Blueprint AutonomousSample2 = new Blueprint(
-      "Autonomous lab sample #2",
+
+    public static readonly Blueprint LabSample2 = new Blueprint(
+      "Lab sample #2",
       15,
       15,
       6,
@@ -146,9 +96,9 @@ namespace Code.Combat
       0,
       0
     );
-    
-    public static readonly Blueprint AutonomousSample3 = new Blueprint(
-      "Autonomous lab sample #3",
+
+    public static readonly Blueprint LabSample3 = new Blueprint(
+      "Lab sample #3",
       25,
       21,
       4,
